@@ -1,5 +1,6 @@
 document.querySelector('#genera-galeria').addEventListener('submit', cargarImagenes);
-var cont=0, canPg, Url;
+var cont, canPg, Url;
+
 
 function cargarImagenes(e){
     e.preventDefault();
@@ -8,13 +9,13 @@ function cargarImagenes(e){
     const cantidad = document.getElementById('numero').value;
     const num = 100/cantidad;
 
-    canPg=num;
-
+    canPg=cantidad;
+    cont = cantidad;
     let url = '';
 
-    url += 'https://picsum.photos/v2/list?page=';
-    url += num;
-    url += '&limit='
+    url += 'https://picsum.photos/v2/list?';
+   // url += num;
+    url += 'limit='
     url += 100;
 
     Url=url;
@@ -123,7 +124,12 @@ function moverD(e){
     console.log("clic flecha derecha");
     
     console.log(Url);
-
+    var p = parseInt(cont, 10);
+    if(p < 100){
+         //console.log(cont);
+    var s = parseInt(canPg, 10);
+    let n = p+s;
+    var i= p;
     const xhr = new XMLHttpRequest();
 
     xhr.open('GET', Url, true);
@@ -134,9 +140,11 @@ function moverD(e){
 
            let contenido = '';
            let nurl = '';
-
-           for (var i=canPg; i<canPg+canPg;i++){
-            console.log(imagen[i]);  
+           console.log('limite'+n);
+           console.log('inicio'+p);
+           for ( i; i<n;i++){
+            //console.log(imagen[i]); 
+            console.log(i); 
             nurl += 'https://picsum.photos/id/';
             nurl += `${imagen[i].id}`;
             nurl += '/3504/2336'
@@ -146,6 +154,8 @@ function moverD(e){
             </div>`;
             nurl = '';
             }
+            cont = i;
+            console.log('indicef'+i);
             document.getElementById('resultado').innerHTML = contenido;
            /*
            imagen.forEach(function(info) {
@@ -164,4 +174,6 @@ function moverD(e){
     }
     
     xhr.send();
+    }
+   
 }
